@@ -1,5 +1,6 @@
-package jdbc;
+package conrtroller;
 
+import util.PropertiesLoader;
 import lombok.SneakyThrows;
 
 import java.io.Closeable;

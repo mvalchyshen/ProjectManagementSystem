@@ -1,9 +1,9 @@
 package model;
 
 public enum Level {
-    JUNIOR("Junior"),
-    MEDIUM("Medium"),
-    SENIOR("Senior");
+    Junior("Junior"),
+    Middle("Middle"),
+    Senior("Senior");
 
     private String name;
     private Level(String name) {
