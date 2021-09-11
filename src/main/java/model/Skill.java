@@ -25,9 +25,8 @@ public class Skill implements BaseEntity<Long>, Serializable {
     @Column(name = "id_skill")
     private Long id;
 
-    @Column(name = "language", columnDefinition = "ENUM('Java', 'C++', 'C#', 'JS')")
-    @Enumerated(EnumType.STRING)
-    private Language language;
+    @Column(name = "language")
+    private String language;
 
     @Column(name = "level", columnDefinition = "ENUM('Junior', 'Middle', 'Senior')")
     @Enumerated(EnumType.STRING)

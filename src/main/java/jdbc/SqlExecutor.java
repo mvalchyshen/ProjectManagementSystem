@@ -1,7 +1,6 @@
 package jdbc;
 
 import conrtroller.DataBaseConnection;
-import model.Language;
 import model.Level;
 import model.Skill;
 
@@ -17,23 +16,26 @@ public class SqlExecutor {
     public static void main(String[] args) throws Exception {
         try (DataBaseConnection dataBaseConnection = DataBaseConnection.getInstance()) {
             Connection connection = dataBaseConnection.getConnection();
-//            PreparedStatement preparedStatement = connection
-//                    .prepareStatement("INSERT INTO goit_hw_db.skills (id_skill, language, level)" +
-//                            " VALUES (?,?,?)");
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("INSERT INTO goit_hw_db.skills (language, level)" +
+                            " VALUES (?,?)");
 //            preparedStatement.setLong(1,10);
-//            preparedStatement.setObject(2, Language.CPLUSPLUS);
-//            preparedStatement.setObject(3, Level.JUNIOR);
+            preparedStatement.setString(1, "Java");
+            preparedStatement.setString(2, Level.Junior.name());
             Statement statement = connection.createStatement();
-//            int i = preparedStatement.executeUpdate();
+            int i = preparedStatement.executeUpdate();
             String sql = "SELECT * FROM goit_hw_db.skills";
+//            ResultSet resultSet = statement.executeQuery(sql);
+//            PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM goit_hw_db.skills WHERE id_skill = ?");
+//            preparedStatement1.setLong(1,10);
+//            preparedStatement1.executeUpdate();
             ResultSet resultSet = statement.executeQuery(sql);
-
 
             List<Skill> skills = new ArrayList<>();
             while (resultSet.next()) {
                 Skill skill = Skill.builder()
                         .id(resultSet.getLong("id_skill"))
-//                        .language(Language.valueOf(resultSet.getString("language")))
+                        .language(resultSet.getString("language"))
                         .level(Level.valueOf(resultSet.getString("level")))
                         .build();
                 skills.add(skill);
