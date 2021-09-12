@@ -32,7 +32,7 @@ public class DeveloperRepository implements BaseRepository<Developer, Long> {
         this.schemeName = PropertiesLoader.getProperty("db.name");
         this.tableName = Developer.class.getAnnotation(Table.class).name();
         this.create = connection.prepareStatement("INSERT INTO " + schemeName + "." + tableName + " (name_developer,age,salary) VALUES(?,?,?)");
-        this.update = connection.prepareStatement("UPDATE " + schemeName + "." + tableName + " SET name_developer = ?,age = ?,salary = ? where (id_customer = ?)");
+        this.update = connection.prepareStatement("UPDATE " + schemeName + "." + tableName + " SET name_developer = ?,age = ?,salary = ? where (id_developer = ?)");
         this.delete = connection.prepareStatement("DELETE FROM" + schemeName + "." + tableName + " WHERE (id_developer = ?)");
         this.getById = connection.prepareStatement("SELECT * FROM " + schemeName + "." + tableName + " WHERE (id_developer = ?)");
         this.getAllById = connection.prepareStatement("SELECT * FROM " + schemeName + "." + tableName);
@@ -43,10 +43,14 @@ public class DeveloperRepository implements BaseRepository<Developer, Long> {
     public Developer save(Developer developer) {
         if (developer.getId() == null || !getById(developer.getId()).isPresent()) {
             create.setString(1, developer.getName());
+            create.setInt(2, developer.getAge());
+            create.setInt(3, developer.getSalary());
             create.executeUpdate();
         } else {
             update.setString(1, developer.getName());
-            update.setLong(2, developer.getId());
+            update.setInt(2, developer.getAge());
+            update.setInt(3, developer.getSalary());
+            update.setLong(4, developer.getId());
             update.executeUpdate();
         }
         return getById(developer.getId()).get();
@@ -59,13 +63,13 @@ public class DeveloperRepository implements BaseRepository<Developer, Long> {
         ResultSet resultSet = getAllById.executeQuery();
         List<Developer> companies = new ArrayList<>();
         while (resultSet.next()) {
-            Developer customer = Developer.builder()
+            Developer developer = Developer.builder()
                     .id(resultSet.getLong("id_developer"))
                     .name(resultSet.getString("name_developer"))
                     .age(resultSet.getInt("age"))
                     .salary(resultSet.getInt("salary"))
                     .build();
-            companies.add(customer);
+            companies.add(developer);
         }
         return companies;
     }
@@ -91,7 +95,7 @@ public class DeveloperRepository implements BaseRepository<Developer, Long> {
     @Override
     public void deleteById(Long id) {
         if (id == null || !getById(id).isPresent()) {
-            throw new NoSuchElementException("Company with " + id + " is not found");
+            throw new NoSuchElementException("Developer with " + id + " is not found");
         } else {
             delete.setLong(1, id);
             delete.executeUpdate();
