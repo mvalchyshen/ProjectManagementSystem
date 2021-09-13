@@ -6,6 +6,7 @@ import model.Project;
 import util.PropertiesLoader;
 
 import javax.persistence.Table;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +41,7 @@ public class ProjectRepository implements BaseRepository<Project, Long> {
     @SneakyThrows
     @Override
     public Project save(Project project) {
-        if (project.getId() == null || !getById(project.getId()).isPresent()) {
+        if (project.getId() == null || getById(project.getId()).isEmpty()) {
             create.setString(1, project.getName());
             create.executeUpdate();
         } else {
@@ -74,11 +75,14 @@ public class ProjectRepository implements BaseRepository<Project, Long> {
     public Optional<Project> getById(Long id) {
         getById.setLong(1, id);
         ResultSet resultSet = getById.executeQuery();
-        Project project = Project.builder()
-                .id(resultSet.getLong("id_project"))
-                .name(resultSet.getString("name_project"))
-                .cost(resultSet.getInt("cost"))
-                .build();
+        Project project = null;
+        while (resultSet.next()) {
+            project = Project.builder()
+                    .id(resultSet.getLong("id_project"))
+                    .name(resultSet.getString("name_project"))
+                    .cost(resultSet.getInt("cost"))
+                    .build();
+        }
         if (project == null) {
             return Optional.empty();
         }
@@ -88,11 +92,16 @@ public class ProjectRepository implements BaseRepository<Project, Long> {
     @SneakyThrows
     @Override
     public void deleteById(Long id) {
-        if (id == null || !getById(id).isPresent()) {
+        if (id == null || getById(id).isEmpty()) {
             throw new NoSuchElementException("Project with " + id + " is not found");
         } else {
             delete.setLong(1, id);
             delete.executeUpdate();
         }
+    }
+    @SneakyThrows
+    @Override
+    public void close() throws IOException {
+        connection.close();
     }
 }

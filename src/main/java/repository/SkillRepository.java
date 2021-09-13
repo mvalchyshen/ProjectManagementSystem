@@ -8,6 +8,7 @@ import model.Skill;
 import util.PropertiesLoader;
 
 import javax.persistence.Table;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +43,7 @@ public class SkillRepository implements BaseRepository<Skill, Long> {
     @SneakyThrows
     @Override
     public Skill save(Skill skill) {
-        if (skill.getId() == null || !getById(skill.getId()).isPresent()) {
+        if (skill.getId() == null || getById(skill.getId()).isEmpty()) {
             create.setString(1, skill.getLanguage());
             create.setString(2, skill.getLevel().name());
             create.executeUpdate();
@@ -77,11 +78,14 @@ public class SkillRepository implements BaseRepository<Skill, Long> {
     public Optional<Skill> getById(Long id) {
         getById.setLong(1, id);
         ResultSet resultSet = getById.executeQuery();
-        Skill skill = Skill.builder()
-                .id(resultSet.getLong("id_skill"))
-                .language(resultSet.getString("language"))
-                .level(Level.valueOf(resultSet.getString("level")))
-                .build();
+        Skill skill = null;
+        while (resultSet.next()) {
+            skill = Skill.builder()
+                    .id(resultSet.getLong("id_skill"))
+                    .language(resultSet.getString("language"))
+                    .level(Level.valueOf(resultSet.getString("level")))
+                    .build();
+        }
         if (skill == null) {
             return Optional.empty();
         }
@@ -91,11 +95,16 @@ public class SkillRepository implements BaseRepository<Skill, Long> {
     @SneakyThrows
     @Override
     public void deleteById(Long id) {
-        if (id == null || !getById(id).isPresent()) {
+        if (id == null || getById(id).isEmpty()) {
             throw new NoSuchElementException("Skill with " + id + " is not found");
         } else {
             delete.setLong(1, id);
             delete.executeUpdate();
         }
+    }
+    @SneakyThrows
+    @Override
+    public void close() throws IOException {
+        connection.close();
     }
 }

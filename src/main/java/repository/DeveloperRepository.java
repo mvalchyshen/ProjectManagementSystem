@@ -7,6 +7,7 @@ import model.Developer;
 import util.PropertiesLoader;
 
 import javax.persistence.Table;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,12 +80,15 @@ public class DeveloperRepository implements BaseRepository<Developer, Long> {
     public Optional<Developer> getById(Long id) {
         getById.setLong(1, id);
         ResultSet resultSet = getById.executeQuery();
-        Developer developer = Developer.builder()
-                .id(resultSet.getLong("id_developer"))
-                .name(resultSet.getString("name_developer"))
-                .age(resultSet.getInt("age"))
-                .salary(resultSet.getInt("salary"))
-                .build();
+        Developer developer = null;
+        while (resultSet.next()) {
+            developer = Developer.builder()
+                    .id(resultSet.getLong("id_developer"))
+                    .name(resultSet.getString("name_developer"))
+                    .age(resultSet.getInt("age"))
+                    .salary(resultSet.getInt("salary"))
+                    .build();
+        }
         if (developer == null) {
             return Optional.empty();
         }
@@ -94,11 +98,16 @@ public class DeveloperRepository implements BaseRepository<Developer, Long> {
     @SneakyThrows
     @Override
     public void deleteById(Long id) {
-        if (id == null || !getById(id).isPresent()) {
+        if (id == null || getById(id).isEmpty()) {
             throw new NoSuchElementException("Developer with " + id + " is not found");
         } else {
             delete.setLong(1, id);
             delete.executeUpdate();
         }
+    }
+    @SneakyThrows
+    @Override
+    public void close() throws IOException {
+        connection.close();
     }
 }

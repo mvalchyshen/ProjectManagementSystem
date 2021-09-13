@@ -1,6 +1,7 @@
 package jdbc;
 
 import conrtroller.DataBaseConnection;
+import model.Company;
 import model.Level;
 import model.Skill;
 
@@ -24,21 +25,20 @@ public class SqlExecutor {
             preparedStatement.setString(2, Level.Junior.name());
             Statement statement = connection.createStatement();
             int i = preparedStatement.executeUpdate();
-            String sql = "SELECT * FROM goit_hw_db.skills";
+            String sql = "SELECT * FROM goit_hw_db.companies where id_company = 1";
 //            ResultSet resultSet = statement.executeQuery(sql);
 //            PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM goit_hw_db.skills WHERE id_skill = ?");
 //            preparedStatement1.setLong(1,10);
 //            preparedStatement1.executeUpdate();
             ResultSet resultSet = statement.executeQuery(sql);
 
-            List<Skill> skills = new ArrayList<>();
+            List<Company> skills = new ArrayList<>();
             while (resultSet.next()) {
-                Skill skill = Skill.builder()
-                        .id(resultSet.getLong("id_skill"))
-                        .language(resultSet.getString("language"))
-                        .level(Level.valueOf(resultSet.getString("level")))
+                Company company = Company.builder()
+                        .id(resultSet.getLong("id_company"))
+                        .name(resultSet.getString("name_company"))
                         .build();
-                skills.add(skill);
+                skills.add(company);
             }
             System.out.println(skills);
 
