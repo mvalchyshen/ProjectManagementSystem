@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Builder
@@ -25,9 +23,16 @@ public class Customer implements BaseEntity<Long>, Serializable {
 
     @Id
     @Column(name = "id_customer")
-
     private Long id;
 
     @Column(name = "name_customer")
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "projects_customers",
+            joinColumns = {@JoinColumn(name = "id_customer")},
+            inverseJoinColumns = {@JoinColumn(name = "id_project")}
+    )
+    Set<Project> projects;
 }

@@ -1,8 +1,7 @@
 package repository;
 
-import conrtroller.DataBaseConnection;
+import util.DataBaseConnection;
 import lombok.SneakyThrows;
-import model.Customer;
 import model.Developer;
 import util.PropertiesLoader;
 

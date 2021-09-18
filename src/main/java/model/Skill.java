@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Builder
@@ -31,4 +32,13 @@ public class Skill implements BaseEntity<Long>, Serializable {
     @Column(name = "level", columnDefinition = "ENUM('Junior', 'Middle', 'Senior')")
     @Enumerated(EnumType.STRING)
     private Level level;
+
+    @ManyToMany
+    @JoinTable(
+            name = "developers_skills",
+            joinColumns = {@JoinColumn(name = "id_skill")},
+            inverseJoinColumns = {@JoinColumn(name = "id_developer")}
+    )
+    private Set<Developer> developers;
+
 }

@@ -1,11 +1,6 @@
-import conrtroller.DataBaseConnection;
-import model.BaseEntity;
 import model.Company;
 import repository.BaseRepository;
 import repository.CompanyRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 public class Application {
     public static void main(String[] args) {

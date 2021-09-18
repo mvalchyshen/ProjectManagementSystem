@@ -6,12 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Builder
@@ -29,4 +27,8 @@ public class Company implements BaseEntity<Long>, Serializable {
     private Long id;
     @Column(name = "name_company")
     private String name;
+
+    @ManyToMany(mappedBy = "companies")
+    Set<Project> projects;
+
 }

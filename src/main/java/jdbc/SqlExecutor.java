@@ -1,9 +1,8 @@
 package jdbc;
 
-import conrtroller.DataBaseConnection;
+import util.DataBaseConnection;
 import model.Company;
 import model.Level;
-import model.Skill;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

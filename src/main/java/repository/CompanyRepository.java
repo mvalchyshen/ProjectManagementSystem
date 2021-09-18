@@ -1,6 +1,6 @@
 package repository;
 
-import conrtroller.DataBaseConnection;
+import util.DataBaseConnection;
 import lombok.SneakyThrows;
 import model.Company;
 import util.PropertiesLoader;

@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Builder
@@ -35,4 +33,7 @@ public class Developer implements BaseEntity<Long>, Serializable {
 
     @Column(name = "salary")
     private int salary;
+
+    @ManyToMany(mappedBy = "developers")
+    private Set<Skill> skills;
 }

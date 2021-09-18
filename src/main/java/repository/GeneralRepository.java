@@ -1,15 +1,11 @@
 package repository;
 
-import conrtroller.DataBaseConnection;
+import util.DataBaseConnection;
 import model.BaseEntity;
 import util.PropertiesLoader;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
 
 public abstract class GeneralRepository<T extends BaseEntity<ID>, ID> implements BaseRepository<T, ID> {
 
