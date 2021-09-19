@@ -1,26 +1,20 @@
-import model.Company;
-import repository.BaseRepository;
-import repository.CompanyRepository;
+import ua.goit.projectmanager.model.Company;
+import ua.goit.projectmanager.service.BaseService;
+import ua.goit.projectmanager.service.ServiceFactory;
+import ua.goit.projectmanager.util.ScriptExecutor;
 
 public class Application {
     public static void main(String[] args) {
-        BaseRepository<Company, Long> company = new CompanyRepository();
-//        Object o = company.getById(2L).get();
-//        Company c = (Company) o;
-//        System.out.println(c);
 
-        Company c = Company.builder()
-                .id(9L)
-                .name("NavY")
+        ScriptExecutor.start();
+        BaseService<Company, Long> companyService = ServiceFactory.of(Company.class);
+        Company company = Company.builder()
+                .id(10L)
+                .name("Maxwell")
+                .projects(null)
                 .build();
-        Company save = company.save(c);
-        Company byId = company.getById(9L).get();
-        System.out.println(byId);
-//        Company iodasdasd = Company.builder()
-//                .id(9L)
-//                .name("iodasdasd")
-//                .build();
-//        company.save(iodasdasd);
+        Company save = companyService.save(company);
+        System.out.println(save);
 
     }
 
