@@ -1,9 +1,6 @@
 package ua.goit.projectmanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -14,13 +11,14 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "projects")
 @Entity
 @Table(name = "customers")
 public class Customer implements BaseEntity<Long>, Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -5982329006424441494L;
 
+    @Serial
+    private static final long serialVersionUID = -6812139878686887183L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,11 +27,11 @@ public class Customer implements BaseEntity<Long>, Serializable {
     @Column(name = "name_customer")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "projects_customers",
             joinColumns = {@JoinColumn(name = "id_customer")},
             inverseJoinColumns = {@JoinColumn(name = "id_project")}
     )
-    Set<Project> projects;
+    private Set<Project> projects;
 }

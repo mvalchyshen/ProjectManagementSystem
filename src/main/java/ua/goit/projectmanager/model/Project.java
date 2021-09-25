@@ -1,10 +1,7 @@
 package ua.goit.projectmanager.model;
 
 import com.sun.source.doctree.SeeTree;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -15,13 +12,14 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"companies","customers","developers"})
 @Entity
 @Table(name = "projects")
 public class Project implements BaseEntity<Long>, Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -5378443679592549063L;
 
+    @Serial
+    private static final long serialVersionUID = 2373092481741317883L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -33,7 +31,7 @@ public class Project implements BaseEntity<Long>, Serializable {
     @Column(name = "cost")
     private int cost;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "companies_projects",
             joinColumns = {@JoinColumn(name = "id_project")},

@@ -1,9 +1,6 @@
 package ua.goit.projectmanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"skills","projects"})
 @Entity
 @Table(name = "developers")
 public class Developer implements BaseEntity<Long>, Serializable {
@@ -37,7 +35,7 @@ public class Developer implements BaseEntity<Long>, Serializable {
 
     @ManyToMany(mappedBy = "developers")
     private Set<Skill> skills;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "projects_developers",
             joinColumns = {@JoinColumn(name = "id_developer")},

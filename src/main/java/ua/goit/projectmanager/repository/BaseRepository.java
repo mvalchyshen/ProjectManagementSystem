@@ -1,4 +1,4 @@
-package ua.goit.projectmanager.repository.oop;
+package ua.goit.projectmanager.repository;
 
 import ua.goit.projectmanager.model.BaseEntity;
 

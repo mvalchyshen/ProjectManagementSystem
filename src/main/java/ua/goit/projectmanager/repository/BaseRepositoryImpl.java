@@ -1,9 +1,8 @@
-package ua.goit.projectmanager.repository.oop;
+package ua.goit.projectmanager.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import ua.goit.projectmanager.model.BaseEntity;
-import ua.goit.projectmanager.model.Company;
 import ua.goit.projectmanager.util.DataBaseConnection;
 import ua.goit.projectmanager.util.PropertiesLoader;
 
@@ -42,7 +41,7 @@ public class BaseRepositoryImpl<T extends BaseEntity<ID>, ID> implements Closeab
         this.modelClass = modelClass;
         this.columnFieldName = Arrays.stream(this.modelClass.getDeclaredFields())
                 .filter(field -> !Modifier.isStatic(field.getModifiers()))
-                .filter(field -> field.getAnnotation(Column.class) != null)
+//                .filter(field -> field.getAnnotation(Column.class) != null)
                 .collect(Collectors.toMap(BaseRepositoryImpl::getColumnName, Field::getName));
 
         String[] generatedColumns = {getColumnName(Arrays.stream(this.modelClass.getDeclaredFields())
@@ -133,14 +132,5 @@ public class BaseRepositoryImpl<T extends BaseEntity<ID>, ID> implements Closeab
     @SneakyThrows
     public void close() throws IOException {
         connection.close();
-    }
-
-    public static void main(String[] args) {
-
-        Map<String, String > columnFieldName = Arrays.stream(Company.class.getDeclaredFields())
-                .filter(field -> !Modifier.isStatic(field.getModifiers()))
-                .collect(Collectors.toMap(field -> getColumnName(field), field -> field.getName())) ;
-        String collect = columnFieldName.keySet().stream().collect(Collectors.joining(","));
-        System.out.println(collect);
     }
 }

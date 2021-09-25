@@ -1,9 +1,8 @@
 package ua.goit.projectmanager.service;
 
 import ua.goit.projectmanager.model.BaseEntity;
-import ua.goit.projectmanager.repository.oop.BaseRepository;
-import ua.goit.projectmanager.repository.oop.BaseRepositoryImpl;
-import ua.goit.projectmanager.repository.oop.RepositoryFactory;
+import ua.goit.projectmanager.repository.BaseRepository;
+import ua.goit.projectmanager.repository.RepositoryFactory;
 
 import java.util.List;
 import java.util.Optional;

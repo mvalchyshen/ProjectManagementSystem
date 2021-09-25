@@ -1,7 +1,6 @@
-package ua.goit.projectmanager.repository.oop;
+package ua.goit.projectmanager.repository;
 
 import ua.goit.projectmanager.model.BaseEntity;
-import ua.goit.projectmanager.repository.oop.BaseRepositoryImpl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
