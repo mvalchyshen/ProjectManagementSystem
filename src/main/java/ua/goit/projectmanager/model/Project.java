@@ -12,7 +12,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"companies","customers","developers"})
 @Entity
 @Table(name = "projects")
 public class Project implements BaseEntity<Long>, Serializable {
@@ -30,17 +29,4 @@ public class Project implements BaseEntity<Long>, Serializable {
 
     @Column(name = "cost")
     private int cost;
-
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "companies_projects",
-            joinColumns = {@JoinColumn(name = "id_project")},
-            inverseJoinColumns = {@JoinColumn(name = "id_company")}
-    )
-    private Set<Company> companies;
-    @ManyToMany(mappedBy = "projects")
-    private Set<Customer> customers;
-    @ManyToMany(mappedBy = "projects")
-    private Set<Developer> developers;
-
 }

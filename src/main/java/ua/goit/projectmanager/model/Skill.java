@@ -11,7 +11,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "developers")
 @Entity
 @Table(name = "skills")
 public class Skill implements BaseEntity<Long>, Serializable {
@@ -30,13 +29,5 @@ public class Skill implements BaseEntity<Long>, Serializable {
     @Column(name = "level", columnDefinition = "ENUM('Junior', 'Middle', 'Senior')")
     @Enumerated(EnumType.STRING)
     private Level level;
-
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "developers_skills",
-            joinColumns = {@JoinColumn(name = "id_skill")},
-            inverseJoinColumns = {@JoinColumn(name = "id_developer")}
-    )
-    private Set<Developer> developers;
 
 }

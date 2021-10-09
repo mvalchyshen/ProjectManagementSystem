@@ -11,7 +11,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"skills","projects"})
 @Entity
 @Table(name = "developers")
 public class Developer implements BaseEntity<Long>, Serializable {
@@ -32,14 +31,4 @@ public class Developer implements BaseEntity<Long>, Serializable {
 
     @Column(name = "salary")
     private int salary;
-
-    @ManyToMany(mappedBy = "developers")
-    private Set<Skill> skills;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "projects_developers",
-            joinColumns = {@JoinColumn(name = "id_developer")},
-            inverseJoinColumns = {@JoinColumn(name = "id_project")}
-    )
-    private Set<Project> projects;
 }

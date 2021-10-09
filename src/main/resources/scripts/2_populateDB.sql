@@ -15,7 +15,7 @@ INSERT INTO `goit_hw_db`.`companies` (`id`, `name_company`) VALUES (3, 'NiX');
 INSERT INTO `goit_hw_db`.`companies` (`id`, `name_company`) VALUES (4, 'Luxoft');
 insert into `goit_hw_db`.`customers` (`id`, `name_customer`) values (1, 'Alfa') , (2, 'Beta') , (3, 'Gama'), (4,"KuklaVod");
 insert into `goit_hw_db`.`developers` (`id`,`name_developer`,`age`) values (1, 'Max', 21), (2, 'Vlad', '22'),(3,'Kolya',23) , (4, 'Olia', 19) , (5, 'Nikita', 30);
-insert into `goit_hw_db`.`projects` (`id` , `name_project`) values (1, 'SpaceX') , (2, 'Balalayka') , (3, 'Sendler') , (4, 'Loader') , (5, 'NoX');
+insert into `goit_hw_db`.`projects` (`id` , `name_project`, `cost`) values (1, 'SpaceX',10000) , (2, 'Balalayka',2) , (3, 'Sendler',14000) , (4, 'Loader',2000) , (5, 'NoX',3000);
 insert into `goit_hw_db`.`companies_projects` (`id_company`,`id_project`) values (1,1) , (2,2) , (3,3) , (4,1);
 insert into `goit_hw_db`.`projects_customers` (`id_customer`,`id_project`) values (1,1), (2,2) ,(3,3) ,(4,4);
 insert into `goit_hw_db`.`developers_skills` (`id_developer`,`id_skill`) values (1, 2), (2,1),(3,8),(4,9),(5,3);

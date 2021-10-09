@@ -12,19 +12,17 @@ public class Application {
 
         ScriptExecutor.start();
         BaseService<Company, Long> companyService = ServiceFactory.of(Company.class);
-        Set<Project> set = new HashSet<>();
+        BaseService<Project, Long> projectService = ServiceFactory.of(Project.class);
+
         Project project = Project.builder()
                 .id(10l)
                 .cost(10000)
                 .name("asdasdas")
                 .build();
-        set.add(project);
         Company company = Company.builder()
                 .id(10L)
                 .name("Maxwell")
-                .projects(set)
                 .build();
-        BaseService<Project, Long> projectService = ServiceFactory.of(Project.class);
         projectService.save(project);
         Company save = companyService.save(company);
         System.out.println(save);

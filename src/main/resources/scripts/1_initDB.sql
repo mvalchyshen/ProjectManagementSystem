@@ -29,6 +29,7 @@ primary key (`id`)
 create table `projects`(
 `id` int not null auto_increment,
 `name_project`  varchar(255) not null,
+`cost` int not null ,
 primary key (`id`)
 );
 

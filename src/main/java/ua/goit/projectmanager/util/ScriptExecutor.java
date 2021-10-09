@@ -26,8 +26,6 @@ public class ScriptExecutor {
         Connection connection = DataBaseConnection.getInstance().getConnection();
         List<String> resourceFiles = sortScript(getResourceFiles(PACKAGE_NAME));
 
-
-
         ScriptRunner scriptRunner = new ScriptRunner(connection);
         for (String script : resourceFiles) {
             try (Reader reader = new InputStreamReader(ScriptExecutor.class
