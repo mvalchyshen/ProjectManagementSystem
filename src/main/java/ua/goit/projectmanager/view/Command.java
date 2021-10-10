@@ -1,6 +1,10 @@
 package ua.goit.projectmanager.view;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
 public enum Command {
     HELP("help"),
     SAVE("save"),
@@ -9,12 +13,4 @@ public enum Command {
     UPDATE("update");
 
     private String name;
-
-    Command(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

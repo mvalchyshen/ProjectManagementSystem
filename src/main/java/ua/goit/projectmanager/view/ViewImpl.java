@@ -5,9 +5,19 @@ import lombok.SneakyThrows;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class ViewImpl implements View{
+public class ViewImpl implements View {
 
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private BufferedReader br;
+    private static final ViewImpl INSTANCE = new ViewImpl();
+
+    public static ViewImpl of() {
+        return INSTANCE;
+    }
+
+    private ViewImpl() {
+        br = new BufferedReader(new InputStreamReader(System.in));
+    }
+
 
     @SneakyThrows
     @Override
