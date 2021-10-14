@@ -1,65 +1,35 @@
 package ua.goit.projectmanager.controller;
 
+import ua.goit.projectmanager.service.commands.Command;
 import ua.goit.projectmanager.service.handler.CommandHandler;
-import ua.goit.projectmanager.util.DataBaseConnection;
 import ua.goit.projectmanager.view.View;
-import ua.goit.projectmanager.view.commands.BaseCommand;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Map;
+import java.util.Optional;
 
 
 public class ControllerImpl implements Controller {
 
     private View view;
-    private List<BaseCommand> commands;
-    private List<String> tables;
-    private CommandHandler commandHandler;
+    private Map<String, Command> commands;
+    private CommandHandler handler;
 
-    public ControllerImpl() {
-        view = View.of();
-        commands = new ArrayList<>();
-        tables = getTablesFromDB();
-        commandHandler = CommandHandler.of();
+
+    public ControllerImpl(View view) {
+        this.view = view;
+        this.commands = Command.of(view);
+        this.handler = CommandHandler.of();
     }
 
-    private List<String> getTablesFromDB() {
-        List<String> tableList = new ArrayList<>();
-        try(DataBaseConnection dataBaseConnection = DataBaseConnection.getInstance()) {
-            Connection connection = dataBaseConnection.getConnection();
-            DatabaseMetaData metaData = connection.getMetaData();
-            String[] types = {"TABLE"};
-            //Retrieving the columns in the database
-            ResultSet tables = metaData.getTables(null, null, "%", types);
-            while (tables.next()) {
-                tableList.add(tables.getString(1));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return tableList;
-    }
 
     @Override
     public void run() {
-        view.write("WELCOME TO CONSOLE DATABASE_APP");
-        try{
-            executeCommands();
-        } catch (Exception e) {
-            System.exit(0);
-        }
-    }
-
-    private void executeCommands() {
+        System.out.println("Welcome");
         while (true) {
-            view.write("PLEASE, CHOOSE COMMAND YOU WANT TO RUN :");
-            commands.forEach(System.out::println);
-            String command = view.read();
-            System.out.println("CHOOSE ENTITY YOU WANT TO" + command);
-            tables.forEach(System.out::println);
-            String table = view.read();
-            commandHandler.handle(command,table);
+            view.write("Write help for list of commands");
+            handler.handle(view.read(), commands);
         }
     }
 }
+

@@ -1,5 +1,13 @@
 package ua.goit.projectmanager.service.handler;
 
+import ua.goit.projectmanager.service.commands.Command;
+import ua.goit.projectmanager.service.handler.companycommandhandler.CreateCompanyCommandHandler;
+import ua.goit.projectmanager.service.handler.companycommandhandler.DeleteCompanyCommandHandler;
+import ua.goit.projectmanager.service.handler.companycommandhandler.ReadCompanyCommandHandler;
+import ua.goit.projectmanager.service.handler.companycommandhandler.UpdateCompanyCommandHandler;
+
+import java.util.Map;
+
 public abstract class CommandHandler {
 
     private final CommandHandler handler;
@@ -8,16 +16,17 @@ public abstract class CommandHandler {
         this.handler = handler;
     }
 
-    protected abstract void apply(String command, String table);
-    protected abstract boolean isApplicable(String command, String table);
+    protected abstract void apply(String command, Map<String, Command> commands);
 
-    public final void handle(String command, String table) {
-        if (isApplicable(command,table)) apply(command,table);
-        else handler.handle(command,table);
+    protected abstract boolean isApplicable(String command, Map<String, Command> commands);
+
+    public final void handle(String command, Map<String, Command> commands) {
+        if (isApplicable(command, commands)) apply(command,commands);
+        else handler.handle(command,commands);
     }
 
     public static CommandHandler of() {
-        return new HandlerCreate(new HandlerUpdate(new HandlerRead(new HandlerDelete(new HandlerException()))));
+        return new CreateCompanyCommandHandler(new ReadCompanyCommandHandler(new UpdateCompanyCommandHandler(new DeleteCompanyCommandHandler(
+                new ExitCommandHandler(new HelpCommandHandler(new HandlerException()))))));
     }
-
 }

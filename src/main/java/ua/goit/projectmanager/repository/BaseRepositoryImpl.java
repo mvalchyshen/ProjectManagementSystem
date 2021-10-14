@@ -110,7 +110,7 @@ public class BaseRepositoryImpl<T extends BaseEntity<ID>, ID> implements Closeab
             statement.setObject(count++, field.get(t));
         }
         statement.executeUpdate();
-        ResultSet resultSet = statement.executeQuery();
+        ResultSet resultSet = statement.getGeneratedKeys();
         resultSet.next();
         return getById((ID) resultSet.getObject(1)).get();
     }

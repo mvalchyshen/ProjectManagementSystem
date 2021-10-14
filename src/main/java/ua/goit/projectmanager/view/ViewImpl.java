@@ -4,17 +4,14 @@ import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class ViewImpl implements View {
 
     private BufferedReader br;
-    private static final ViewImpl INSTANCE = new ViewImpl();
 
-    public static ViewImpl of() {
-        return INSTANCE;
-    }
 
-    private ViewImpl() {
+    public ViewImpl() {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
 
@@ -28,5 +25,10 @@ public class ViewImpl implements View {
     @Override
     public void write(String message) {
         System.out.println(message);
+    }
+
+    @Override
+    public void write(Object... objects) {
+        Arrays.stream(objects).forEach(System.out::println);
     }
 }
