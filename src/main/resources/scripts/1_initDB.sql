@@ -22,6 +22,7 @@ create table `developers`(
 `id` int not null auto_increment,
 `name_developer` varchar(45) not null,
 `age` int not null,
+`salary` int not null ,
 primary key (`id`)
 );
 
@@ -30,6 +31,7 @@ create table `projects`(
 `id` int not null auto_increment,
 `name_project`  varchar(255) not null,
 `cost` int not null ,
+`create_date` varchar(45) not null,
 primary key (`id`)
 );
 

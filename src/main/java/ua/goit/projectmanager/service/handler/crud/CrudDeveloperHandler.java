@@ -6,7 +6,7 @@ import ua.goit.projectmanager.view.Command;
 import ua.goit.projectmanager.view.View;
 
 public class CrudDeveloperHandler extends CrudHandler<Developer,Long> {
-    protected CrudDeveloperHandler(CommandHandler commandHandler) {
+    public CrudDeveloperHandler(CommandHandler commandHandler) {
         super(commandHandler, Developer.class);
     }
 

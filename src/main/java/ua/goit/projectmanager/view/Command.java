@@ -31,8 +31,12 @@ public enum Command {
     CREATEDEVELOPER("create_developer","create new developer in DB"),
     GETDEVELOPERBYID("get_developer_by_id", "returns developer from DB by ID"),
     GETALLDEVELOPERS("get_all_developers","returns all developers from DB"),
-    DELETEDEVELOPER("delete_developer","deletes developer from DB by ID");
+    DELETEDEVELOPER("delete_developer","deletes developer from DB by ID"),
 
+    TOTALSALARYOFDEVELOPERSONPROJECT("get_salary_devs_on_project", "sum of salaries on project"),
+    LISTOFDEVELOPERSONPROJECT("list_devs_on_project","get all devs on a project"),
+    LISTDEVELOPERSBYLANGUAGE("list_devs_by_language","get devs by specified language"),
+    LISTOFPROJECTS("list_projects","get_list_of_projects");
 
     private String commandName;
     private String description;

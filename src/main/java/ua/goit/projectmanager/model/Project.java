@@ -29,4 +29,7 @@ public class Project implements BaseEntity<Long>, Serializable {
 
     @Column(name = "cost")
     private int cost;
+
+    @Column(name = "create_date")
+    private String createDate;
 }
