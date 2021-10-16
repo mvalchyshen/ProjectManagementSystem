@@ -1,26 +1,26 @@
 package ua.goit.projectmanager.service.handler;
 
+
 import ua.goit.projectmanager.view.Command;
 import ua.goit.projectmanager.view.View;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
-public class HandlerException extends CommandHandler {
-    public HandlerException() {
-        super(null);
+public class HandlerHelp extends CommandHandler {
+
+
+    public HandlerHelp(CommandHandler commandHandler) {
+        super(commandHandler);
     }
 
     @Override
     protected boolean isApplicable(String command) {
-        return true;
+        return Command.HELP.getCommandName().equalsIgnoreCase(command);
     }
 
     @Override
     protected void apply(String command, View view) {
-        view.write("No such command="+command+" in the list \n" +
-                "pick command from the list : "
-                , getListOfCommands());
+        view.write(getListOfCommands());
     }
 
     private String getListOfCommands() {

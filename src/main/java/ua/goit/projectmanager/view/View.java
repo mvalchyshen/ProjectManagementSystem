@@ -5,4 +5,6 @@ public interface View {
     void write(String message);
     void write(Object... objects);
 
+
+
 }

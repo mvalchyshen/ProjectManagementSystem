@@ -10,7 +10,6 @@ public class ViewImpl implements View {
 
     private BufferedReader br;
 
-
     public ViewImpl() {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
